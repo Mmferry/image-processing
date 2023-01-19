@@ -1,36 +1,19 @@
-import express from "express";
-import csv from "csvtojson";
-import { promises as fs } from "fs";
+import express, { Application, Request, Response } from 'express';
+import morgan from 'morgan';
+import * as dotenv from 'dotenv';
 
-const app = express();
-const port = 3000;
+dotenv.config();
 
-const inputFile = "./users.csv";
-const outputFile = "users.json";
+const app: Application = express();
+const PORT = process.env.PORT || 3000;
 
-interface User {
-  first_name: string;
-  last_name: string;
-  phone: string;
-}
+app.use(morgan('dev'));
 
-app.get("/convert", (req, res) => {
-  res.send("Converting...");
-  csv()
-    .fromFile(inputFile)
-    .then((data) => {
-      const newData = data.map((item: User) => {
-        let firstName = item.first_name;
-        let lastName = item.last_name;
-        let phone = item.phone ? item.phone : "missing data";
-        return { firstName, lastName, phone };
-      });
-
-      fs.writeFile(outputFile, JSON.stringify(newData));
-    });
+app.get('/', (req: Request, res: Response) => {
+  res.send('Hello World 🌍 - check our api for rezing images at /resize');
 });
 
 // start the Express server
-app.listen(port, () => {
-  console.log(`server started at http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`server started at http://localhost:${PORT}`);
 });
