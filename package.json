@@ -9,6 +9,7 @@
     "test": "npx tsc && jasmine",
     "start": "node dist/index.js",
     "prettier": "prettier --config .prettierrc \"**/*.{ts,js}\" --write",
+    "lint:fix": "eslint --fix",
     "lint": "eslint . --ext .js"
   },
   "author": "Mohammed Fared",
