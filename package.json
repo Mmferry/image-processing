@@ -4,7 +4,7 @@
   "description": "Api for resiznig images",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --watch ./src/index.ts",
+    "dev": "nodemon ./src/index.ts",
     "build": "npx tsc",
     "test": "npx tsc && jasmine",
     "start": "node dist/index.js",

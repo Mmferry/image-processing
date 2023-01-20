@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from 'express';
 import morgan from 'morgan';
 import * as dotenv from 'dotenv';
+import routes from './routes';
 
 dotenv.config();
 
@@ -9,9 +10,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(morgan('dev'));
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello World 🌍 - check our api for rezing images at /resize');
-});
+app.use(routes);
 
 // start the Express server
 app.listen(PORT, () => {
