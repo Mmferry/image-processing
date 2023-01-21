@@ -1,5 +1,5 @@
 ﻿# Image processing API
- 
+
 ## Project Summary
 
 This project aims to give you a real-world scenario in which you would read and write to your disk via a Node.js express server rather than a database. The project you create serves two purposes: to prepare you for setting up scalable code and architecture for real-world projects and tie together some of the most popular middleware and utilities found in Node.js projects. This project barely touches the surface of what is possible but will prove your ability to use what you’ve learned in real-world scenarios.
@@ -8,7 +8,7 @@ For this project, refactor and test as much as possible while you are building. 
 
 ## How to build and start the server
 
-#### please follow below instractions.
+#### please follow below instructions.
 
 ### 1. Install all dependencies
 
@@ -53,7 +53,6 @@ URL Params: `filename` and `height` and `width`
 4. `santamonica`
 5. `icelandwaterfall`
 
-
 ## Installed packages
 
 - [NodeJS](https://nodejs.org/en/) - The JavaScript runtime.
@@ -62,4 +61,4 @@ URL Params: `filename` and `height` and `width`
 - [Sharp](https://sharp.pixelplumbing.com/) - NodeJS image processor.
 - [Jasmine](https://jasmine.github.io/setup/nodejs.html) - simple JavaScript BDD testing framework for Node.
 - [Morgan](https://www.npmjs.com/package/morgan) - HTTP request logger middleware for node.js.
-- [Supertest](https://github.com/ladjs/supertest) -  SuperAgent driven library for testing HTTP servers.
+- [Supertest](https://github.com/ladjs/supertest) - SuperAgent driven library for testing HTTP servers.
