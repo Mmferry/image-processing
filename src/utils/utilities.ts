@@ -13,14 +13,18 @@ export interface ResizeImgProps {
   res: Response;
 }
 
-export const DIR_PATH = `${path.resolve('./')}/images`;
+export const DIR_PATH = `${path.resolve('./')}/src/images`;
 export const THUMB_PATH = `${DIR_PATH}/thumbnails`;
 
 export const INPUT_FILE = (filename: string): string =>
   `${DIR_PATH}/${filename}.jpg`;
 
+export const removeDir = async () => {
+  await fsPromises.rmdir(THUMB_PATH, { recursive: true });
+};
+
 export const makeDir = async () => {
-  await fsPromises.mkdir('images/thumbnails');
+  await fsPromises.mkdir(THUMB_PATH);
 };
 
 export const isOriginalImgExist = (filename: string): boolean => {
