@@ -40,10 +40,14 @@ This command will build then run test cases
 
 ## Endpoint
 
+#### `localhost:3000/preview?filename=<Available Image>`
+
 Method: `get`
 URL Params: `filename`
 
     For example: `localhost:3000/preview?filename=fjord`
+
+#### `localhost:3000/preview?filename=<Available Image>&width=<width>&height=<height>`
 
 Method: `get`
 URL Params: `filename` and `height` and `width`
