@@ -3,5 +3,5 @@ export const images: string[] = [
   'fjord',
   'icelandwaterfall',
   'palmtunnel',
-  'santamonica',
-];
+  'santamonica'
+]
