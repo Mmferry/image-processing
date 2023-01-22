@@ -22,7 +22,11 @@ For this project, refactor and test as much as possible while you are building. 
 
 `npm run dev`
 
-This command will start the server running on port `3000`.
+This command will start the server on port `3000` in development mode
+
+`npm run start`
+
+This command will start the server running on port `3000` in production mode.
 
 ### 4. Linting
 
