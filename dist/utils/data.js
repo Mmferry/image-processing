@@ -6,5 +6,5 @@ exports.images = [
     'fjord',
     'icelandwaterfall',
     'palmtunnel',
-    'santamonica',
+    'santamonica'
 ];

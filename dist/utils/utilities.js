@@ -47,9 +47,7 @@ var node_path_1 = __importDefault(require("node:path"));
 var data_1 = require("./data");
 exports.DIR_PATH = "".concat(node_path_1.default.resolve('./'), "/src/images");
 exports.THUMB_PATH = "".concat(exports.DIR_PATH, "/thumbnails");
-var INPUT_FILE = function (filename) {
-    return "".concat(exports.DIR_PATH, "/").concat(filename, ".jpg");
-};
+var INPUT_FILE = function (filename) { return "".concat(exports.DIR_PATH, "/").concat(filename, ".jpg"); };
 exports.INPUT_FILE = INPUT_FILE;
 var removeDir = function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
@@ -79,22 +77,18 @@ var isOriginalImgExist = function (filename) {
 exports.isOriginalImgExist = isOriginalImgExist;
 var errorHandler = function (props) {
     if (!props.filename)
-        return props.res
-            .status(400)
-            .send('Bad request, query parameter ( filename ) is required.');
+        return props.res.status(400).send('Bad request, query parameter ( filename ) is required.');
     if (!props.width)
-        return props.res
-            .status(400)
-            .send('Bad request, query parameter ( width ) is required.');
+        return props.res.status(400).send('Bad request, query parameter ( width ) is required.');
     if (!props.height)
-        return props.res
-            .status(400)
-            .send('Bad request, query parameter ( height ) is required.');
-    if (!(0, exports.isOriginalImgExist)(props.filename) ||
-        !(0, node_fs_1.existsSync)((0, exports.INPUT_FILE)(props.filename)))
-        return props.res
-            .status(404)
-            .send('Image does not exist!, try another filename');
+        return props.res.status(400).send('Bad request, query parameter ( height ) is required.');
+    if (props.width < 1 ||
+        props.height < 1 ||
+        typeof props.width == 'string' ||
+        typeof props.height == 'string')
+        return props.res.status(400).send('Not valid inputs. must be numbers');
+    if (!(0, exports.isOriginalImgExist)(props.filename) || !(0, node_fs_1.existsSync)((0, exports.INPUT_FILE)(props.filename)))
+        return props.res.status(404).send('Image does not exist!, try another filename');
 };
 exports.errorHandler = errorHandler;
 var processImg = function (props) { return __awaiter(void 0, void 0, void 0, function () {
@@ -103,11 +97,8 @@ var processImg = function (props) { return __awaiter(void 0, void 0, void 0, fun
             case 0: return [4 /*yield*/, (0, sharp_1.default)((0, exports.INPUT_FILE)(props.filename))
                     .resize(props.width, props.height)
                     .toFile("".concat(exports.THUMB_PATH, "/").concat(props.filename, "_").concat(props.width, "_").concat(props.height, ".jpg"))
-                    .then(function (info) { })
                     .catch(function (err) {
-                    return props.res
-                        .status(500)
-                        .send('Something went wrong, please try later!');
+                    return props.res.status(500).send('Something went wrong, please try later!');
                 })];
             case 1:
                 _a.sent();

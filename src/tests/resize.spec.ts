@@ -8,12 +8,17 @@ const request = supertest(app)
 describe('Testing the resize endpoint response', () => {
   const width = 200 as number
   const height = 200 as number
-  beforeAll(async () => {
-    await removeDir()
-    await makeDir()
+
+  it('Using the /preview endpoint return 200', async () => {
+    const response = await request.get('/preview/?filename=santamonica')
+    expect(response.status).toBe(200)
   })
 
   it('Using the endpoint with a valid parameters and filename returns 200', async () => {
+    if (fs.existsSync(`${THUMB_PATH}/fjord_${width}_${height}.jpg`)) {
+      await fs.unlinkSync(`${THUMB_PATH}/fjord_${width}_${height}.jpg`)
+    }
+
     const response = await request.get(`/resize/?filename=fjord&width=${+width}&height=${+height}`)
 
     expect(response.status).toBe(200)

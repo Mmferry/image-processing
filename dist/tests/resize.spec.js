@@ -49,13 +49,17 @@ describe('Testing the resize endpoint response', function () {
     var height = 200;
     beforeAll(function () { return __awaiter(void 0, void 0, void 0, function () {
         return __generator(this, function (_a) {
+            return [2 /*return*/];
+        });
+    }); });
+    it('Using the /preview endpoint return 200', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var response;
+        return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, (0, utilities_1.removeDir)()];
+                case 0: return [4 /*yield*/, request.get('/preview/?filename=santamonica')];
                 case 1:
-                    _a.sent();
-                    return [4 /*yield*/, (0, utilities_1.makeDir)()];
-                case 2:
-                    _a.sent();
+                    response = _a.sent();
+                    expect(response.status).toBe(200);
                     return [2 /*return*/];
             }
         });
@@ -64,8 +68,14 @@ describe('Testing the resize endpoint response', function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, request.get("/resize/?filename=fjord&width=".concat(+width, "&height=").concat(+height))];
+                case 0:
+                    if (!node_fs_1.default.existsSync("".concat(utilities_1.THUMB_PATH, "/fjord_").concat(width, "_").concat(height, ".jpg"))) return [3 /*break*/, 2];
+                    return [4 /*yield*/, node_fs_1.default.unlinkSync("".concat(utilities_1.THUMB_PATH, "/fjord_").concat(width, "_").concat(height, ".jpg"))];
                 case 1:
+                    _a.sent();
+                    _a.label = 2;
+                case 2: return [4 /*yield*/, request.get("/resize/?filename=fjord&width=".concat(+width, "&height=").concat(+height))];
+                case 3:
                     response = _a.sent();
                     expect(response.status).toBe(200);
                     return [2 /*return*/];
