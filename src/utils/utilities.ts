@@ -40,6 +40,14 @@ export const errorHandler = (props: ResizeImgProps) => {
   if (!props.height)
     return props.res.status(400).send('Bad request, query parameter ( height ) is required.')
 
+  if (
+    props.width < 1 ||
+    props.height < 1 ||
+    typeof props.width == 'string' ||
+    typeof props.height == 'string'
+  )
+    return props.res.status(400).send('Not valid inputs. must be numbers')
+
   if (!isOriginalImgExist(props.filename) || !existsSync(INPUT_FILE(props.filename)))
     return props.res.status(404).send('Image does not exist!, try another filename')
 }
