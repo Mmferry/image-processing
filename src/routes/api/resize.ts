@@ -1,8 +1,8 @@
 import { Router, Request, Response } from 'express'
-import { existsSync } from 'node:fs'
 import {
   errorHandler,
   findFileByName,
+  isFileExist,
   makeDir,
   processImg,
   THUMB_PATH
@@ -18,7 +18,7 @@ resize.get('/', async (req: Request, res: Response) => {
 
   errorHandler({ filename, width, height, res })
 
-  !existsSync(THUMB_PATH) && makeDir()
+  !isFileExist(THUMB_PATH) && makeDir()
 
   const isFileExists = await findFileByName(THUMB_PATH, thumbImgName)
 

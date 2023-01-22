@@ -18,12 +18,20 @@ export const THUMB_PATH = `${DIR_PATH}/thumbnails`
 
 export const INPUT_FILE = (filename: string): string => `${DIR_PATH}/${filename}.jpg`
 
+export const removeDir = async () => {
+  await fsPromises.rmdir(THUMB_PATH, { recursive: true })
+}
+
 export const makeDir = async () => {
   await fsPromises.mkdir(THUMB_PATH)
 }
 
 export const isOriginalImgExist = (filename: string): boolean => {
   return images.includes(filename)
+}
+
+export const isFileExist = (path: PathLike) => {
+  return existsSync(path)
 }
 
 export const errorHandler = (props: ResizeImgProps) => {
@@ -44,7 +52,7 @@ export const errorHandler = (props: ResizeImgProps) => {
   )
     return props.res.status(400).send('Not valid inputs. must be numbers')
 
-  if (!isOriginalImgExist(props.filename) || !existsSync(INPUT_FILE(props.filename)))
+  if (!isOriginalImgExist(props.filename) || !isFileExist(INPUT_FILE(props.filename)))
     return props.res.status(404).send('Image does not exist!, try another filename')
 }
 
