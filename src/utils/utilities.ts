@@ -1,4 +1,3 @@
-import { Response } from 'express'
 import sharp from 'sharp'
 import { promises as fsPromises, existsSync, PathLike } from 'node:fs'
 import { readdir } from 'node:fs/promises'
@@ -10,7 +9,6 @@ export interface ResizeImgProps {
   filename: string
   width: number
   height: number
-  res: Response
 }
 
 export const DIR_PATH = `${path.resolve('./')}/src/images`
@@ -34,34 +32,12 @@ export const isFileExist = (path: PathLike) => {
   return existsSync(path)
 }
 
-export const errorHandler = (props: ResizeImgProps) => {
-  if (!props.filename)
-    return props.res.status(400).send('Bad request, query parameter ( filename ) is required.')
-
-  if (!props.width)
-    return props.res.status(400).send('Bad request, query parameter ( width ) is required.')
-
-  if (!props.height)
-    return props.res.status(400).send('Bad request, query parameter ( height ) is required.')
-
-  if (
-    props.width < 1 ||
-    props.height < 1 ||
-    typeof props.width == 'string' ||
-    typeof props.height == 'string'
-  )
-    return props.res.status(400).send('Not valid inputs. must be numbers')
-
-  if (!isOriginalImgExist(props.filename) || !isFileExist(INPUT_FILE(props.filename)))
-    return props.res.status(404).send('Image does not exist!, try another filename')
-}
-
 export const processImg = async (props: ResizeImgProps) => {
   await sharp(INPUT_FILE(props.filename))
     .resize(props.width, props.height)
     .toFile(`${THUMB_PATH}/${props.filename}_${props.width}_${props.height}.jpg`)
     .catch((err) => {
-      return props.res.status(500).send('Something went wrong, please try later!')
+      throw new Error(err)
     })
 }
 
