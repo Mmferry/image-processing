@@ -1,4 +1,4 @@
-import { isFileExist, makeDir, removeDir } from './../utils/utilities'
+import { isFileExist, makeDir, processImg, removeDir } from './../utils/utilities'
 import supertest from 'supertest'
 import fs from 'node:fs'
 import app from '../index'
@@ -7,8 +7,8 @@ import { THUMB_PATH } from '../utils/utilities'
 const request = supertest(app)
 
 describe('Testing the resize endpoint response', () => {
-  const width = 200 as number
-  const height = 200 as number
+  const testWidth = 200 as number
+  const testHeight = 200 as number
 
   beforeAll(async () => {
     await removeDir()
@@ -16,17 +16,25 @@ describe('Testing the resize endpoint response', () => {
   })
 
   it('Using the endpoint with a valid parameters and filename returns 200', async () => {
-    if (isFileExist(`${THUMB_PATH}/fjord_${width}_${height}.jpg`)) {
-      await fs.unlinkSync(`${THUMB_PATH}/fjord_${width}_${height}.jpg`)
+    if (isFileExist(`${THUMB_PATH}/fjord_${testWidth}_${testHeight}.jpg`)) {
+      await fs.unlinkSync(`${THUMB_PATH}/fjord_${testWidth}_${testHeight}.jpg`)
     }
 
-    const response = await request.get(`/resize/?filename=fjord&width=${+width}&height=${+height}`)
+    const response = await request.get(
+      `/resize/?filename=fjord&width=${+testWidth}&height=${+testHeight}`
+    )
 
     expect(response.status).toBe(200)
   })
 
-  it('Should found the image in thumbnails dir by second time', () => {
+  it('generated new resized image from processImg func to be truthy', () => {
     expect(isFileExist(`${THUMB_PATH}/fjord_200_200.jpg`)).toBeTruthy()
+  })
+
+  it('Testing processImg func', () => {
+    expect(async () => {
+      await processImg({ filename: 'palmtunnel', width: testWidth, height: testHeight })
+    }).not.toThrow()
   })
 
   it('Should not found the image in thumbnails dir by first time', () => {
